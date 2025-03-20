@@ -1,0 +1,60 @@
+<!-- src/app/features/audit/audit-logs/audit-logs.component.html -->
+<div class="container mt-3">
+  <h2>Audit Logs</h2>
+
+  <!-- Filter Form -->
+  <form [formGroup]="filterForm" (ngSubmit)="applyFilters()" class="mb-4">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <input type="text" formControlName="user" class="form-control" placeholder="Filter by User">
+      </div>
+      <div class="col-md-3">
+        <input type="text" formControlName="type" class="form-control" placeholder="Filter by Type">
+      </div>
+      <div class="col-md-2">
+        <input type="date" formControlName="startDate" class="form-control" placeholder="Start Date">
+      </div>
+      <div class="col-md-2">
+        <input type="date" formControlName="endDate" class="form-control" placeholder="End Date">
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+      </div>
+    </div>
+    <div class="mt-2">
+      <button type="button" class="btn btn-secondary me-2" (click)="resetFilters()">Reset</button>
+      <button type="button" class="btn btn-outline-success" (click)="exportLogs()">Export Logs</button>
+    </div>
+  </form>
+
+  <!-- Loading and Error States -->
+  <div *ngIf="loading" class="alert alert-info">Loading audit logs...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  <div *ngIf="!loading && filteredLogs.length === 0" class="alert alert-secondary">
+    No logs found.
+  </div>
+
+  <!-- Logs Table -->
+  <div *ngIf="!loading && filteredLogs.length > 0" class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Timestamp</th>
+          <th>User</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of filteredLogs">
+          <td>{{ log.id }}</td>
+          <td>{{ log.timestamp | date:'short' }}</td>
+          <td>{{ log.user }}</td>
+          <td>{{ log.type }}</td>
+          <td>{{ log.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

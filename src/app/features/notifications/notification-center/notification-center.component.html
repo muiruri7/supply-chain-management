@@ -1,0 +1,23 @@
+<!-- src/app/features/notifications/notification-center/notification-center.component.html -->
+<div class="container mt-3">
+  <h2>Notification Center</h2>
+  <div *ngIf="loading" class="alert alert-info">Loading notifications...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  
+  <div *ngIf="!loading && notifications.length === 0" class="alert alert-secondary">
+    No notifications to display.
+  </div>
+  
+  <ul class="list-group" *ngIf="!loading && notifications.length > 0">
+    <li *ngFor="let notification of notifications" class="list-group-item d-flex justify-content-between align-items-center"
+        [ngClass]="{'list-group-item-light': notification.read, 'list-group-item-warning': !notification.read}">
+      <div>
+        <strong>{{ notification.type }}</strong> - {{ notification.message }}<br>
+        <small class="text-muted">{{ notification.createdAt | date:'short' }}</small>
+      </div>
+      <button *ngIf="!notification.read" class="btn btn-sm btn-outline-success" (click)="markAsRead(notification)">
+        Mark as Read
+      </button>
+    </li>
+  </ul>
+</div>
