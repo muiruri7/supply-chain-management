@@ -1,0 +1,40 @@
+<!-- src/app/features/orders/order-list/order-list.component.html -->
+<div class="container mt-3">
+  <h2>Orders List</h2>
+
+  <div *ngIf="loading" class="alert alert-info">Loading orders...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <table class="table table-striped" *ngIf="!loading && !error">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Order Number</th>
+        <th>Customer Name</th>
+        <th>Status</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.id }}</td>
+        <td>{{ order.orderNumber }}</td>
+        <td>{{ order.customerName }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.createdAt | date:'short' }}</td>
+        <td>
+          <a class="btn btn-sm btn-primary me-2" [routerLink]="['/orders/edit', order.id]">Edit</a>
+          <button class="btn btn-sm btn-danger" (click)="deleteOrder(order.id)" [disabled]="deleteLoading[order.id]">
+            <span *ngIf="deleteLoading[order.id]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span *ngIf="!deleteLoading[order.id]">Delete</span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mt-3">
+    <a class="btn btn-success" [routerLink]="['/orders/new']">Create New Order</a>
+  </div>
+</div>

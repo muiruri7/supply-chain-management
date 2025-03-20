@@ -1,0 +1,37 @@
+<!-- src/app/features/orders/order-form/order-form.component.html -->
+<div class="container mt-3">
+  <h2>{{ isEditMode ? 'Edit Order' : 'Create Order' }}</h2>
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="orderNumber" class="form-label">Order Number</label>
+      <input type="text" id="orderNumber" formControlName="orderNumber" class="form-control" placeholder="Enter order number">
+      <div *ngIf="orderForm.get('orderNumber')?.touched && orderForm.get('orderNumber')?.invalid" class="text-danger">
+        Order Number is required.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="customerName" class="form-label">Customer Name</label>
+      <input type="text" id="customerName" formControlName="customerName" class="form-control" placeholder="Enter customer name">
+      <div *ngIf="orderForm.get('customerName')?.touched && orderForm.get('customerName')?.invalid" class="text-danger">
+        Customer Name is required.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select id="status" formControlName="status" class="form-select">
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </div>
+    <!-- Additional fields can be added here -->
+
+    <button type="submit" class="btn btn-primary" [disabled]="orderForm.invalid || submitting">
+      <span *ngIf="submitting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <span *ngIf="!submitting">{{ isEditMode ? 'Update Order' : 'Create Order' }}</span>
+    </button>
+  </form>
+
+  <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+</div>

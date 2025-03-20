@@ -1,0 +1,41 @@
+<!-- src/app/features/dashboard/dashboard-overview/dashboard-overview.component.html -->
+<div class="container mt-3">
+  <h2>Dashboard Overview</h2>
+
+  <div *ngIf="loading" class="alert alert-info">Loading dashboard data...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div class="row" *ngIf="!loading && !error && dashboardData">
+    <!-- Inventory Overview -->
+    <div class="col-md-4 mb-3">
+      <div class="card text-white bg-primary h-100">
+        <div class="card-body">
+          <h5 class="card-title">Total Inventory</h5>
+          <p class="card-text display-4">{{ dashboardData.inventoryCount }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Order Processing Summary -->
+    <div class="col-md-4 mb-3">
+      <div class="card text-white bg-warning h-100">
+        <div class="card-body">
+          <h5 class="card-title">Orders in Progress</h5>
+          <p class="card-text display-4">{{ dashboardData.ordersInProgress }}</p>
+          <small>Pending: {{ dashboardData.ordersPending }} / Completed: {{ dashboardData.ordersCompleted }}</small>
+        </div>
+      </div>
+    </div>
+    <!-- Supplier & User Management Overview -->
+    <div class="col-md-4 mb-3">
+      <div class="card text-white bg-success h-100">
+        <div class="card-body">
+          <h5 class="card-title">Suppliers & Users</h5>
+          <p class="card-text">
+            Supplier Issues: <strong>{{ dashboardData.supplierIssues }}</strong><br>
+            Users: <strong>{{ dashboardData.userCount }}</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

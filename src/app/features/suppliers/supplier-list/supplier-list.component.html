@@ -1,0 +1,35 @@
+<!-- src/app/features/suppliers/supplier-list/supplier-list.component.html -->
+<div class="container mt-3">
+  <h2>Suppliers List</h2>
+  <div *ngIf="loading" class="alert alert-info">Loading suppliers...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  <table class="table table-striped" *ngIf="!loading && !error">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Contact Info</th>
+        <th>Performance Rating</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let supplier of suppliers">
+        <td>{{ supplier.id }}</td>
+        <td>{{ supplier.name }}</td>
+        <td>{{ supplier.contactInfo }}</td>
+        <td>{{ supplier.performanceRating || 'N/A' }}</td>
+        <td>
+          <a class="btn btn-sm btn-primary me-2" [routerLink]="['/suppliers/edit', supplier.id]">Edit</a>
+          <button class="btn btn-sm btn-danger" (click)="deleteSupplier(supplier.id)" [disabled]="deleteLoading[supplier.id]">
+            <span *ngIf="deleteLoading[supplier.id]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span *ngIf="!deleteLoading[supplier.id]">Delete</span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mt-3">
+    <a class="btn btn-success" [routerLink]="['/suppliers/new']">Add New Supplier</a>
+  </div>
+</div>

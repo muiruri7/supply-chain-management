@@ -1,0 +1,32 @@
+<!-- src/app/features/inventory/inventory-list/inventory-list.component.html -->
+<div class="container mt-3">
+  <h2>Inventory List</h2>
+  <div *ngIf="loading" class="alert alert-info">Loading inventory...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  <table class="table table-striped" *ngIf="!loading && !error">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Product Name</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of inventoryItems">
+        <td>{{ item.id }}</td>
+        <td>{{ item.productName }}</td>
+        <td>{{ item.stock }}</td>
+        <td>
+          <!-- Edit button -->
+          <a class="btn btn-sm btn-primary me-2" [routerLink]="['/inventory/edit', item.id]">Edit</a>
+          <!-- Delete button with loading state -->
+          <button class="btn btn-sm btn-danger" (click)="deleteItem(item.id)" [disabled]="deleteLoading[item.id]">
+            <span *ngIf="deleteLoading[item.id]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span *ngIf="!deleteLoading[item.id]">Delete</span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
